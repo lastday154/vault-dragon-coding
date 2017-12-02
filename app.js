@@ -15,9 +15,11 @@ app.post('/object', (req, res) => {
 
 	let object = {};
 	let created_at = Date.now();
+	let value;
 	for (var key in req.body) {
 		object.key = key;
-		object.value = {created_at : created_at, value : req.body[key]};
+		value = req.body[key];
+		object.value = {created_at : created_at, value : value};
 	}
 
 	/* update if the key already exists, otherwise create new record */
@@ -29,7 +31,7 @@ app.post('/object', (req, res) => {
 			if (err) {
 				throw err;
 			}
-			res.json(result);
+			res.json({key : key, value : value, timestamp : created_at});
 	})
 })
 
@@ -55,7 +57,7 @@ app.get('/object/:key', (req, res) => {
 				}
 			});
 		}
-		
+
 		res.json({value : value});
 		res.end();
 	});
