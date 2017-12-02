@@ -5,9 +5,9 @@ const app = express()
 // use bodyParser to parse json
 app.use(bodyParser.json());
 
-
 const Object = require('./models/object');
 
+/* create or update existing object */
 app.post('/object', (req, res) => {
 	if (req.body.length === 0) {
 		res.json({error: 'Please provide key'});
@@ -33,21 +33,35 @@ app.post('/object', (req, res) => {
 	})
 })
 
+/* get object by key or (key and timestamp) */
 app.get('/object/:key', (req, res) => {
 	const key =  req.params.key;
-	if (req.query.timestamp) {
-		const timestamp = req.query.timestamp;
-		res.json(timestamp);
-	}
 	const query = {
 		key: key
 	}
-
 	Object.findObject(query, (err, result) => {
-		res.json({value : result.value});
+		console.log(result);
+		if (!result.values || result.values.length == 0) {
+			res.json({error: 'value is empty'})
+		}
+
+		const values = result.values;
+		let value = values[values.length-1].value;
+		/* if timestamp present in url, find value by timestamp */
+		if (req.query.timestamp) {
+			values.forEach((val) => {
+				if (val.created_at == req.query.timestamp) {
+					value = val.value;
+				}
+			});
+		}
+		
+		res.json({value : value});
+		res.end();
 	});
 })
 
+/* get all objects */
 app.get('/object/', (req, res) => {
 	Object.findAllObject((err, result) => {
 		res.json(result);
