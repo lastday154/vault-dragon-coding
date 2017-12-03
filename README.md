@@ -1,7 +1,11 @@
 ## Usage ##
 Just clone or download and run **npm install** and then **node app** to start
 
-## controlled key-value store ##
+## Demo ##
+Link: https://vast-wildwood-18512.herokuapp.com/
+Video : https://www.screencast.com/t/7XicTgVxU
+
+## Controlled key-value store ##
 Build a version controlled key-value store with a HTTP API we can query that from. The API needs to be able to:
 
 1. Accept a key(string) and value(some json blob/string) {"key" : "value"} and store them. If an existing key is sent, the value should be updated
