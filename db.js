@@ -2,7 +2,7 @@
 var mongoose = require('mongoose');
 
 //Set up default mongoose connection
-var mongoDB = 'mongodb://127.0.0.1/vaultdragon';
+var mongoDB = 'mongodb://heroku_w9kbn4zm:i2p1ejduaubqi7s06bings5omj@ds125896.mlab.com:25896/heroku_w9kbn4zm';
 mongoose.connect(mongoDB, {
   useMongoClient: true
 });
